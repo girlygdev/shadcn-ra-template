@@ -13,6 +13,7 @@ class UserService {
 	 * Retrieve all users
 	 *
 	 * @static getUsers
+	 * @returns {Promise<User[]>} A promise that resolves to an array of user documents.
 	 * @memberof UserService
 	 */
 	static getUsers = async () => {
@@ -20,10 +21,12 @@ class UserService {
 	};
 
 	/**
-	 * Create user
+	 * Creates a new user if the email is unique.
 	 *
 	 * @static createUser
-	 * @param {CreateUserInput} input
+	 * @param {CreateUserInput} input - input data for creating user.
+	 * @throws {ApiError} if the email is already taken.
+	 * @returns {Promise<User>} Newly created user document.
 	 * @memberof UserService
 	 */
 	static createUser = async (input: CreateUserInput) => {
@@ -42,7 +45,8 @@ class UserService {
 	 * Get user by ID
 	 *
 	 * @static getUserById
-	 * @param {string} userId
+	 * @param {string} userId ObjectId of User
+	 * @returns {Promise<User>} Newly created user document.
 	 * @memberof UserService
 	 */
 	static getUserById = async (userId: string) => {
@@ -56,7 +60,8 @@ class UserService {
 	 *
 	 * @static updateUser
 	 * @param {string} userId
-	 * @param {IUser} updateData
+	 * @param {IUser} updateData - input data for updating user profile
+	 * @returns {Promise<User>} Updated created user document.
 	 * @memberof UserService
 	 */
 	static updateUser = async (userId: string, updateData: Partial<IUser>) => {
@@ -87,6 +92,7 @@ class UserService {
 	 *
 	 * @static deleteUser
 	 * @param {string} userId
+	 * @returns {boolean} result when user is deleted
 	 * @memberof UserService
 	 */
 	static deleteUser = async (userId: string) => {
@@ -98,8 +104,9 @@ class UserService {
 	/**
 	 * Restore soft deleted user 
 	 *
-	 * @static
+	 * @static restoreUser
 	 * @param {string} userId
+	 * @returns {boolean} result when user is restored
 	 * @memberof UserService
 	 */
 	static restoreUser = async (userId: string) => {
@@ -112,9 +119,9 @@ class UserService {
 	 * Update user profile name and image only
 	 * for frontend use updates
 	 *
-	 * @static
+	 * @static updateProfile
 	 * @param {string} userId
-	 * @param {IUser} updateData
+	 * @param {IUser} updateData - input data for updating profile info
 	 * @memberof UserService
 	 */
 	static updateProfile = async (
@@ -148,6 +155,8 @@ class UserService {
 	 * @param {string} userId
 	 * @param {string} oldPassword
 	 * @param {string} newPassword
+	 * @throws {ApiError} returns error if password didnt match
+	 * @returns {Promise<User>} returns updated user document
 	 * @memberof UserService
 	 */
 	static updatePassword = async (

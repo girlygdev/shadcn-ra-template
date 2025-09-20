@@ -11,7 +11,7 @@ import UserService from './user.service.js';
  */
 const getUsers = async (req: Request, res: Response) => {
 	const users = await UserService.getUsers();
-
+	console.log(users)
 	sendResponse(res, 201, 'success', 'List of all Users', users);
 };
 

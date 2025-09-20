@@ -3,10 +3,8 @@
 ### ✅ What I Did
 - init repo
 - feat: add user feature to handle MVC for user routes.
-
-### 🚧 Blockers
-- None
+- create middlewares for request validation and error handling
 
 ### 🔜 Next Steps
-- Complete user controller and service for all methods
+- Create auth routes
 

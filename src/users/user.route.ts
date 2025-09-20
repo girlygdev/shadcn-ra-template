@@ -11,8 +11,8 @@ router.get('/:id', asyncHandler(getUserById));
 router.post('/', validateResource(createUserSchema), asyncHandler(createUser));
 router.put('/:id', validateResource(updateUserSchema), asyncHandler(updateUser));
 router.put('/:id/restore', asyncHandler(restoreUser));
+router.put('/:id/update-profile', validateResource(updateUserProfileSchema), asyncHandler(updateUserProfile));
+router.put('/:id/change-password', validateResource(updateUserPasswordSchema), asyncHandler(updateUserPassword));
 router.delete('/:id', asyncHandler(deleteUser));
-router.put('/api/users/:id/update-profile', validateResource(updateUserProfileSchema), asyncHandler(updateUserProfile));
-router.put('/api/users/:id/change-password', validateResource(updateUserPasswordSchema), asyncHandler(updateUserPassword));
 
 export default router;
