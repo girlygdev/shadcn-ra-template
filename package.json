@@ -4,9 +4,9 @@
   "description": "API for Reset Clinic",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "nodemon --watch src --exec ts-node src/index.ts",
+    "dev": "nodemon --watch src --exec tsx src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node --experimental-specifier-resolution=node dist/index.js"
   },
   "type": "module",
   "repository": {
@@ -20,16 +20,20 @@
   },
   "homepage": "https://github.com/emotionalreset/resetclinic-api#readme",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.2.2",
+    "eslint": "^9.36.0",
     "express": "^5.1.0",
     "mongoose": "^8.18.1",
     "zod": "^4.1.9"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.3",
     "@types/node": "^24.5.2",
     "nodemon": "^3.1.10",
-    "ts-node": "^10.9.2",
+    "prettier": "^3.6.2",
+    "tsx": "^4.20.5",
     "typescript": "^5.9.2"
   }
 }

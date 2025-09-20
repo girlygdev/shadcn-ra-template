@@ -1,35 +1,18 @@
-import { Request, Response } from "express";
-import { User } from "./user.model.js";
-import { createUserSchema } from './user.schema.js';
-import { sendResponse } from '../utils/response.js';
+import { Router } from 'express';
+import validateResource from '../middleware/validateResource.js';
+import { createUserSchema, updateUserPasswordSchema, updateUserProfileSchema, updateUserSchema } from './user.schema.js';
+import { asyncHandler } from '../middleware/asyncHandler.js';
+import { createUser, deleteUser, getUserById, getUsers, restoreUser, updateUser, updateUserPassword, updateUserProfile } from './user.controller.js';
 
-export class UserController {
+const router = Router();
 
-	/**
-	 * List all users
-	 * 
-	 * @route	GET /api/users
-	 * @desc Fetch all user
-	 * 
-	 * @param {Request} req
-	 * @param {Response} res
-	 * @memberof UserController
-	 */
-	static async getUsers(req: Request, res: Response) {
-		try {
-			const users = await User.find()
+router.get('/', asyncHandler(getUsers));
+router.get('/:id', asyncHandler(getUserById));
+router.post('/', validateResource(createUserSchema), asyncHandler(createUser));
+router.put('/:id', validateResource(updateUserSchema), asyncHandler(updateUser));
+router.put('/:id/restore', asyncHandler(restoreUser));
+router.delete('/:id', asyncHandler(deleteUser));
+router.put('/api/users/:id/update-profile', validateResource(updateUserProfileSchema), asyncHandler(updateUserProfile));
+router.put('/api/users/:id/change-password', validateResource(updateUserPasswordSchema), asyncHandler(updateUserPassword));
 
-			return sendResponse(res, 201, "success", "List of all Users", users);
-		} catch (error) {
-			return sendResponse(res, 500, "error", "Failed to fetch users");
-		}
-	}
-
-	static async createUser(req: Request, res: Response) {
-		try {
-
-		} catch (error) {
-			return sendResponse(res, 500, "error", "Failed to fetch users");
-		}
-	}
-}
+export default router;
