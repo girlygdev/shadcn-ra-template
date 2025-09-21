@@ -8,3 +8,10 @@
 ### 🔜 Next Steps
 - Create auth routes
 
+## [2025-09-21]
+
+### ✅ What I Did
+- 
+
+### 🔜 Next Steps
+- 

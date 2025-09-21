@@ -1,9 +1,10 @@
 import "dotenv/config";
 import express, { Request, Response } from "express";
-import userRoutes from "./users/user.route.js";
 import { connectDB } from './db.js';
 import { errorHandler } from './middleware/errrorHandler.js';
 import { sendResponse } from './utils/response.js';
+import authRoutes from './auth/auth.route.js';
+import userRoutes from './users/user.route.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -15,6 +16,7 @@ connectDB();
 app.use(express.json());
 
 // Routes
+app.use('/api', authRoutes)
 app.use('/api/users', userRoutes);
 
 // Health check route
