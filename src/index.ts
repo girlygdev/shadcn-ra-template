@@ -6,6 +6,7 @@ import { sendResponse } from './utils/response.js';
 import authRoutes from './modules/auth/auth.route.js';
 import userRoutes from './modules/users/user.route.js';
 import cors, { CorsOptions } from "cors";
+import cookieParser from 'cookie-parser';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -23,6 +24,7 @@ app.use(cors(corsOptions));
 
 // parse requests with JSON payload
 app.use(express.json());
+app.use(cookieParser());
 
 // Routes
 app.use('/api', authRoutes)

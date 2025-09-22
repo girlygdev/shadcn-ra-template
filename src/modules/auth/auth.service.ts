@@ -28,7 +28,7 @@ class AuthService {
 		const token = jwt.sign(
 			payload,
 			process.env.JWT_SECRET!,
-			{ expiresIn: '1h' }
+			{ expiresIn: '10d' }
 		)
 		
 		return token;
@@ -71,7 +71,6 @@ class AuthService {
 		};
 	}
 
-
 	/**
 	 * Authenticate user when logging in
 	 *
@@ -99,8 +98,18 @@ class AuthService {
 
 		const token = this.generateToken(user);
 
-		return token
+		const userData = {
+			token,
+			user
+		}
+
+		return userData
 	}
+
+	static getSignedUser = async (id: string) => {
+		const user = await User.findById(id);
+		return user;
+	}	
 }
 
 export default AuthService;

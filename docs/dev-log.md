@@ -29,6 +29,7 @@
 - update status codes
 - add auth middleware
 - protect user routes
+- add cors support
 
 ### 🔜 Next Steps
 
