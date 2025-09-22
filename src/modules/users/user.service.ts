@@ -1,4 +1,4 @@
-import { ApiError } from '../utils/apiError.js';
+import { ApiError } from '../../utils/apiError.js';
 import { IUser, User } from './user.model.js';
 import { CreateUserInput } from './user.schema.js';
 import bcrypt from 'bcrypt';
@@ -31,11 +31,11 @@ class UserService {
 	 */
 	static createUser = async (input: CreateUserInput) => {
 		const isEmailUnique = await User.findOne({ email: input.email });
-    if (isEmailUnique) {
-      throw new ApiError("Validation failed", 400, {
+		if (isEmailUnique) {
+			throw new ApiError("Validation failed", 400, {
 				"email": ["Email is already taken"]
 			});
-    }
+		}
 
 		const user = new User(input);
 		return await user.save();
@@ -100,7 +100,7 @@ class UserService {
 
 		return true;
 	};
-	
+
 	/**
 	 * Restore soft deleted user 
 	 *
@@ -145,7 +145,7 @@ class UserService {
 		return user;
 	};
 
-	
+
 	/**
 	 * Update password, user needs to provide their current
 	 * password prior to update

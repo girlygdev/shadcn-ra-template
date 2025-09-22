@@ -3,8 +3,8 @@ import express, { Request, Response } from "express";
 import { connectDB } from './db.js';
 import { errorHandler } from './middleware/errrorHandler.js';
 import { sendResponse } from './utils/response.js';
-import authRoutes from './auth/auth.route.js';
-import userRoutes from './users/user.route.js';
+import authRoutes from './modules/auth/auth.route.js';
+import userRoutes from './modules/users/user.route.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;

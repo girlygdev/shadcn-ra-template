@@ -74,8 +74,6 @@ UserSchema.pre<Query<any, any>>(/^find/, function (next) {
 UserSchema.pre("save", async function (next) {
 	const user = this as IUser;
 
-	console.log('called on save', user.password)
-
 	if (!user.isModified("password")) {
 		return next(); // skip if password is unchanged.
 	}

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { sendResponse } from '../utils/response.js';
+import { sendResponse } from '../../utils/response.js';
 import AuthService from './auth.service.js';
 
 /**
@@ -11,8 +11,8 @@ import AuthService from './auth.service.js';
  */
 const signupUser = async (req: Request, res: Response) => {
 	const user = await AuthService.signupUser(req.body);
-	
-	sendResponse(res, 200, 'success', 'User has successfully registered.', user);
+
+	sendResponse(res, 201, 'success', 'User has successfully registered.', user);
 }
 
 
@@ -26,7 +26,7 @@ const signupUser = async (req: Request, res: Response) => {
  */
 const loginUser = async (req: Request, res: Response) => {
 	const token = await AuthService.loginUser(req.body);
-	
+
 	sendResponse(res, 200, 'success', 'Successfully logged in', token);
 }
 

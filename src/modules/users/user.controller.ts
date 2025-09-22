@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { sendResponse } from '../utils/response.js';
+import { sendResponse } from '../../utils/response.js';
 import UserService from './user.service.js';
 
 /**
@@ -40,9 +40,9 @@ const getUserById = async (req: Request, res: Response) => {
 	const user = await UserService.getUserById(id);
 
 	if (user) {
-		sendResponse(res, 201, 'success', 'User details', user);
+		sendResponse(res, 200, 'success', 'User details', user);
 	} else {
-		sendResponse(res, 400, 'error', 'User not found');
+		sendResponse(res, 404, 'error', 'User not found');
 	}
 };
 
@@ -58,7 +58,7 @@ const updateUser = async (req: Request, res: Response) => {
 	const id = req.params.id;
 	const user = await UserService.updateUser(id, req.body);
 
-	sendResponse(res, 201, 'success', 'User updated', user);
+	sendResponse(res, 200, 'success', 'User updated', user);
 };
 
 /**
@@ -73,7 +73,7 @@ const deleteUser = async (req: Request, res: Response) => {
 	const id = req.params.id;
 	const result = await UserService.deleteUser(id);
 
-	sendResponse(res, 201, 'success', 'User deleted', result);
+	sendResponse(res, 204, 'success', 'User deleted', result);
 }
 
 /**
@@ -87,7 +87,7 @@ const restoreUser = async (req: Request, res: Response) => {
 	const id = req.params.id;
 	const result = await UserService.restoreUser(id);
 
-	sendResponse(res, 201, 'success', 'User restored', result);
+	sendResponse(res, 200, 'success', 'User restored', result);
 }
 
 /**
@@ -100,7 +100,7 @@ const restoreUser = async (req: Request, res: Response) => {
 const updateUserProfile = async (req: Request, res: Response) => {
 	const id = req.params.id;
 	const user = await UserService.updateProfile(id, req.body);
-	sendResponse(res, 201, 'success', 'User profile updated', user);
+	sendResponse(res, 200, 'success', 'User profile updated', user);
 }
 
 /**
@@ -115,11 +115,11 @@ const updateUserPassword = async (req: Request, res: Response) => {
 	const { oldPassword, newPassword } = req.body;
 
 	const user = await UserService.updatePassword(id, oldPassword, newPassword);
-	sendResponse(res, 201, 'success', 'User password updated', user);
+	sendResponse(res, 200, 'success', 'User password updated', user);
 }
 
-export { 
-	createUser, getUsers, getUserById, updateUser, 
-	deleteUser, restoreUser, 
+export {
+	createUser, getUsers, getUserById, updateUser,
+	deleteUser, restoreUser,
 	updateUserProfile, updateUserPassword,
 };
