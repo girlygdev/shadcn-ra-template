@@ -5,12 +5,21 @@ import { errorHandler } from './middleware/errrorHandler.js';
 import { sendResponse } from './utils/response.js';
 import authRoutes from './modules/auth/auth.route.js';
 import userRoutes from './modules/users/user.route.js';
+import cors, { CorsOptions } from "cors";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // connect to MongoDB
 connectDB();
+
+// Allow your frontend origin
+const corsOptions: CorsOptions = {
+  origin: "http://localhost:3000", // frontend app
+  credentials: true,               // allow cookies/auth headers
+};
+
+app.use(cors(corsOptions));
 
 // parse requests with JSON payload
 app.use(express.json());
