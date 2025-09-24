@@ -15,16 +15,33 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 
 // Allow your frontend origin
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+	'http://localhost:3000',
+	process.env.FRONTEND_URL
+];
+
 const corsOptions: CorsOptions = {
-  origin: "http://localhost:3000", // frontend app
-  credentials: true,               // allow cookies/auth headers
+  origin(origin, callback) {
+    // allow requests with no origin, like curl or mobile apps
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    return callback(new Error(`Not allowed by CORS: ${origin}`));
+  },
+  credentials: true,   // allow cookies/auth headers
+	methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+  optionsSuccessStatus: 204, // helps legacy browsers
 };
 
+app.use(cookieParser());
 app.use(cors(corsOptions));
 
 // parse requests with JSON payload
 app.use(express.json());
-app.use(cookieParser());
+
 
 // Routes
 app.use('/api', authRoutes)

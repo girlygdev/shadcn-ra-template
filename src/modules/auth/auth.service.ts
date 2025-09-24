@@ -1,7 +1,7 @@
 import { User, UserEnum } from '../users/user.model.js';
 import { ApiError } from '../../utils/apiError.js';
 import { LoginInput, SignupInput } from './auth.schema.js';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 
 /**
  * Service layer for User Auth
@@ -106,10 +106,41 @@ class AuthService {
 		return userData
 	}
 
+	
+	/**
+	 * Get signed in user
+	 *
+	 * @static
+	 * @param {string} id
+	 * @memberof AuthService
+	 */
 	static getSignedUser = async (id: string) => {
 		const user = await User.findById(id);
 		return user;
-	}	
+	}
+
+	static refreshToken = async (oldToken: string) => {
+		const decoded = jwt.verify(oldToken, process.env.JWT_SECRET!, { algorithms: ["HS256"] }) as any;
+
+		if (!decoded) {
+			throw new ApiError("Unauthorized access", 400);
+		}
+
+		const user = await User.findById(decoded.userId);
+
+		if (!user) {
+			throw new ApiError("Unauthorized access", 400);
+		}
+		
+		const token = this.generateToken(user);
+
+		const userData = {
+			user,
+			token
+		};
+
+		return userData;
+	}
 }
 
 export default AuthService;
