@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { sendResponse } from '../../utils/response.js';
 import UserService from './user.service.js';
+import paginate from '../../utils/paginate.js';
+import { User } from './user.model.js';
 
 /**
  * List all users
@@ -10,9 +12,17 @@ import UserService from './user.service.js';
  * @param {Response} res
  */
 const getUsers = async (req: Request, res: Response) => {
-	const users = await UserService.getUsers();
+	const { page: reqPage = 1, limit: reqLimit = 10, search = ''} = req.query;
+	const query = search ? { 
+		$or: [
+			{ name: { $regex: search , $options: 'i' } },
+			{ email: { $regex: search , $options: 'i' } }
+		]
+	} : {};
 
-	sendResponse(res, 201, 'success', 'List of all Users', users);
+	const { data, total, page, limit } = await paginate(User, query, Number(reqPage), Number(reqLimit));
+
+	sendResponse(res, 201, 'success', 'List of all Users', data, total, page, limit );
 };
 
 /**
